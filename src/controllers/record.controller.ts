@@ -16,6 +16,17 @@ export const listRecords = async (req: Request, res: Response) => {
     return successResponse(res, records);
 }
 
+export const getRecord = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id as string;
+        const record = await RecordService.getRecordById(id);
+        return successResponse(res, record);
+    } catch (err: any) {
+        return errorResponse(res, err.message, 404);
+    }
+}
+
+
 export const deleteRecord = async (req: Request, res: Response) => {
     try {
         const id = req.params.id as string;

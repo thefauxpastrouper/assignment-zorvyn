@@ -10,6 +10,7 @@ const recordRoutes = Router();
 recordRoutes.use(authGuard, statusGuard);
 
 recordRoutes.get('/', RecordController.listRecords);
+recordRoutes.get('/:id', RecordController.getRecord);
 recordRoutes.post('/', roleGuard([Role.ADMIN, Role.ANALYST]), RecordController.createRecord);
 recordRoutes.put('/:id', roleGuard([Role.ADMIN, Role.ANALYST]), RecordController.updateRecord);
 recordRoutes.delete('/:id', roleGuard([Role.ADMIN]), RecordController.deleteRecord);

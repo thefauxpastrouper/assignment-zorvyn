@@ -28,22 +28,56 @@ export class RecordService {
     });
   }
 
-  static async getRecords(userId: string, query: any) {
-    const { page = 1, limit = 10, type, category } = query;
-    const skip = (Number(page) - 1) * Number(limit);
-
-    return await prisma.record.findMany({
-      where: { 
-        userId, 
-        deletedAt: null,
-        ...(type && { type }),
-        ...(category && { category })
-      },
-      take: Number(limit),
-      skip,
-      orderBy: { date: 'desc' },
+  static async getRecordById(id: string) {
+    const record = await prisma.record.findFirst({
+      where: { id, deletedAt: null },
       select: recordSelect
     });
+    if (!record) throw new Error("Record not found");
+    return record;
+  }
+
+  static async getRecords(userId: string, query: any) {
+    const { page = 1, limit = 10, type, category, startDate, endDate } = query;
+    const pageNum = Number(page);
+    const limitNum = Number(limit);
+    const skip = (pageNum - 1) * limitNum;
+
+    // Build filter conditions
+    const where: any = {
+      userId,
+      deletedAt: null,
+      ...(type && { type }),
+      ...(category && { category }),
+    };
+
+    // Date range filtering
+    if (startDate || endDate) {
+      where.date = {};
+      if (startDate) where.date.gte = new Date(startDate as string);
+      if (endDate) where.date.lte = new Date(endDate as string);
+    }
+
+    const [records, total] = await Promise.all([
+      prisma.record.findMany({
+        where,
+        take: limitNum,
+        skip,
+        orderBy: { date: 'desc' },
+        select: recordSelect
+      }),
+      prisma.record.count({ where })
+    ]);
+
+    return {
+      records,
+      pagination: {
+        total,
+        page: pageNum,
+        limit: limitNum,
+        totalPages: Math.ceil(total / limitNum)
+      }
+    };
   }
 
   // soft deletion
