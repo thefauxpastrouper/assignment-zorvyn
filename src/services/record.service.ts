@@ -46,13 +46,8 @@ export class RecordService {
     });
   }
 
+  // soft deletion
   static async deleteRecord(id: string) {
-    return await prisma.record.delete({
-      where: { id }
-    });
-  }
-
-  static async softDelete(id: string) {
     return await prisma.record.update({
       where: { id },
       data: { deletedAt: new Date() },
