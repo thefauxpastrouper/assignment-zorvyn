@@ -96,9 +96,6 @@ export class DashboardService {
         });
     }
 
-    /**
-     * Returns all dashboard data in a single call — avoids multiple round trips.
-     */
     static async getDashboardOverview(userId: string) {
         const [summary, categoryTotals, monthlyTrends, weeklyTrends, recentActivity] =
             await Promise.all([

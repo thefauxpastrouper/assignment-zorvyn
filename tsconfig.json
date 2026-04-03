@@ -30,7 +30,9 @@
     "paths": {
       "*": ["src/*"],
       "@prisma/client": ["./src/services/prisma/generated/prisma/client"]
-    }
+    },
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "include": ["src/**/*"]
 }
