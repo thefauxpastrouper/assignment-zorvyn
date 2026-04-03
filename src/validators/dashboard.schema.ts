@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
+extendZodWithOpenApi(z);
+
 
 export const DashboardQuerySchema = z.object({
   query: z.object({
@@ -26,4 +29,4 @@ export const DashboardQuerySchema = z.object({
       .optional()
       .default(5),
   }),
-});
+}).openapi('DashboardQuery');

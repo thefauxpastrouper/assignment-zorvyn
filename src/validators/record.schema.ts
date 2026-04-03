@@ -1,8 +1,11 @@
 import { z } from "zod";
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
+extendZodWithOpenApi(z);
+
 
 const recordTypeEnum = z.enum(["INCOME", "EXPENSE"]);
 
-export const CreateRecordSchema = z.object({
+const recordSchema = z.object({
     amount: z.number({ error: "Amount must be a number" })
         .positive({ error: "Amount must be positive" }),
     type: recordTypeEnum,
@@ -15,19 +18,28 @@ export const CreateRecordSchema = z.object({
         .optional(),
 });
 
-export const UpdateRecordSchema = CreateRecordSchema.partial();
+export const CreateRecordSchema = z.object({
+    body: recordSchema.openapi('CreateRecordRequest')
+});
+
+export const UpdateRecordSchema = z.object({
+    body: recordSchema.partial().openapi('UpdateRecordRequest')
+});
 
 export const ListRecordsQuerySchema = z.object({
-    page: z.coerce.number().int().positive().optional().default(1),
-    limit: z.coerce.number().int().positive().max(100).optional().default(10),
-    type: recordTypeEnum.optional(),
-    category: z.string().optional(),
-    startDate: z.coerce.date().optional(),
-    endDate: z.coerce.date().optional(),
+    query: z.object({
+        page: z.coerce.number().int().positive().optional().default(1),
+        limit: z.coerce.number().int().positive().max(100).optional().default(10),
+        type: recordTypeEnum.optional(),
+        category: z.string().optional(),
+        startDate: z.coerce.date().optional(),
+        endDate: z.coerce.date().optional(),
+    }).openapi('ListRecordsQuery')
 });
+
 
 export const IdParamSchema = z.object({
     params: z.object({
         id: z.uuid("Invalid ID format. Should be UUID.")
     }),
-});
+}).openapi('IdParam');
