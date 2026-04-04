@@ -1,0 +1,3 @@
+testapi.fauxpastrouper.xyz {
+    reverse_proxy api:3000
+}

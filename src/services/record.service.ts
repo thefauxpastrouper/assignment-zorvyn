@@ -21,7 +21,20 @@ const recordSelect = {
 
 export class RecordService {
   static async createRecord(userId: string, data: any) {
-    if (data.amount <= 0) throw new Error("Amount must be positive");
+    const amount = data.amount;
+
+    if (typeof amount !== 'number' || Number.isNaN(amount) || amount <= 0) {
+      throw new Error('Amount must be positive');
+    }
+
+    if (!data.type || typeof data.type !== 'string') {
+      throw new Error('Type is required');
+    }
+
+    if (!data.category || typeof data.category !== 'string') {
+      throw new Error('Category is required');
+    }
+
     return await prisma.record.create({
       data: { ...data, userId },
       select: recordSelect

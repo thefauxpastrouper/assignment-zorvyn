@@ -1,6 +1,5 @@
 import { prisma } from '../utils/db';
 import bcrypt from 'bcryptjs';
-import { Role } from '@prisma/client';
 
 export class UserService {
     static async createUser(data: any) {

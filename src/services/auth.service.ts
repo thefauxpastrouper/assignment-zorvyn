@@ -48,7 +48,7 @@ export class AuthService {
             where: { email },
         });
 
-        if (!user || !(await bcrypt.compare(password, user.password))) {
+        if (!user || !user.isActive || !(await bcrypt.compare(password, user.password))) {
             throw new Error('Invalid email or password');
         }
 
