@@ -39,5 +39,7 @@ jobs:
             cd ~/app
             echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
             docker compose pull api
+            docker compose up -d db
+            docker compose run --rm api bunx prisma migrate deploy --config src/services/prisma/prisma.config.ts
             docker compose up -d api
             docker image prune -f

@@ -3,6 +3,10 @@ services:
     image: ${DOCKERHUB_USERNAME}/equiledger:latest
     restart: always
     env_file: .env
+    # Ensures production behavior (e.g. sanitized API errors) even if NODE_ENV is missing from .env.
+    # Override in .env: set NODE_ENV=development for a local/staging stack when needed.
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
     volumes:
       - ./.env:/app/.env
     expose:

@@ -1,23 +1,39 @@
 import type { Request, Response, NextFunction } from 'express';
 import { AppError } from '../utils/error';
+import { clientErrorKey, resolveClientError } from '../utils/clientError';
 
 export const globalErrorHandler = (
-  err: any, 
-  req: Request, 
-  res: Response, 
-  next: NextFunction
+  err: unknown,
+  req: Request,
+  res: Response,
+  _next: NextFunction
 ) => {
-  const statusCode = err instanceof AppError ? err.statusCode : 500;
-  const message = err.message || "Internal Server Error";
+  if (err instanceof AppError) {
+    console.error(`[ERROR] ${req.method} ${req.url}: ${err.message}`);
+    return res.status(err.statusCode).json({
+      success: false,
+      error: err.name,
+      message: err.message,
+      stack:
+        process.env.NODE_ENV === 'development' && err.stack
+          ? err.stack
+          : undefined,
+    });
+  }
 
-  // Log the error for the backend team (Pino or console)
-  console.error(`[ERROR] ${req.method} ${req.url}: ${message}`);
+  const resolved = resolveClientError(err);
+  console.error(`[ERROR] ${req.method} ${req.url}: ${resolved.logDetail}`);
+  if (process.env.NODE_ENV === 'development' && err instanceof Error && err.stack) {
+    console.error(err.stack);
+  }
 
-  res.status(statusCode).json({
+  return res.status(resolved.statusCode).json({
     success: false,
-    error: err.name !== 'Error' ? err.name : "ServerError",
-    message: message,
-    // Only show stack trace in development mode
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+    error: clientErrorKey(err, resolved.statusCode),
+    message: resolved.message,
+    stack:
+      process.env.NODE_ENV === 'development' && err instanceof Error
+        ? err.stack
+        : undefined,
   });
 };
