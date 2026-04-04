@@ -3,6 +3,8 @@ services:
     image: ${DOCKERHUB_USERNAME}/equiledger:latest
     restart: always
     env_file: .env
+    volumes:
+      - ./.env:/app/.env
     expose:
       - "3000"
     depends_on:
