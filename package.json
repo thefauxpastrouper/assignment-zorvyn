@@ -10,7 +10,8 @@
     "db:studio": "bunx --bun prisma studio --config ./src/services/prisma/prisma.config.ts",
     "db:migrate": "bunx --bun prisma migrate dev --config ./src/services/prisma/prisma.config.ts",
     "db:generate": "bunx --bun prisma generate --config ./src/services/prisma/prisma.config.ts",
-    "db:seed": "bun run src/scripts/seed.ts"
+    "db:seed": "bun run src/scripts/seed.ts",
+    "db:seed:users": "bun run src/scripts/seed-users.ts"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^8.5.0",
