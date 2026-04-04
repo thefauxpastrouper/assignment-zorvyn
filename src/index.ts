@@ -21,7 +21,7 @@ app.use("/api/v1", v1Router);
 app.use(
   '/reference',
   apiReference({
-    theme: 'kepler', // Options: 'default', 'blue', 'purple', 'moon', 'mars'
+    theme: 'kepler',
     content: openApiSpec,
   })
 );
@@ -38,7 +38,7 @@ app.all("/{*path}", (req, _res, next) => {
 // Global error handler (must be last middleware)
 app.use(globalErrorHandler);
 
-app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
+app.listen(Number(process.env.PORT) || 3000, '0.0.0.0', () => {
   console.log(`🚀 Server running on http://0.0.0.0:${process.env.PORT || 3000}`);
   console.log(`📖 Documentation: http://0.0.0.0:${process.env.PORT || 3000}/reference`);
 });

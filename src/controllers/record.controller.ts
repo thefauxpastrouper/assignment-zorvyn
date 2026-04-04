@@ -13,7 +13,7 @@ export const createRecord = async (req: Request, res: Response) => {
 
 export const listRecords = async (req: Request, res: Response) => {
     const records = await RecordService.getRecords(req.user!.id, req.query);
-    return successResponse(res, records);
+    return successResponse(res, records, "Success");
 }
 
 export const getRecord = async (req: Request, res: Response) => {
@@ -41,7 +41,7 @@ export const updateRecord = async (req: Request, res: Response) => {
     try {
         const id = req.params.id as string;
         const record = await RecordService.updateRecord(id, req.body);
-        return successResponse(res, record);
+        return successResponse(res, record, "Success");
     }catch(error: any) {
         return  errorResponse(res, error.message)
     }

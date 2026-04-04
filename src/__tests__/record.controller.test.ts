@@ -70,7 +70,7 @@ describe('RecordController', () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       success: true,
-      message: 'Successs',
+      message: 'Success',
       data: expected,
     });
   });
@@ -118,7 +118,7 @@ describe('RecordController', () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       success: true,
-      message: 'Successs',
+      message: 'Success',
       data: expected,
     });
   });

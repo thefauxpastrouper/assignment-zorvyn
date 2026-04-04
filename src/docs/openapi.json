@@ -6,23 +6,22 @@
     "description": "A comprehensive API for EquiLedger, a financial records management system. This API provides endpoints for user authentication, record management, and dashboard analytics.",
     "contact": {
       "name": "EquiLedger Support",
-      "email": "support@equiledger.com",
-      "url": "https://equiledger.com/support"
+      "email": "thefauxpastrouper120@gmail.com",
+      "url": "https://thefauxpastrouper.online/"
     },
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
-    },
-    "termsOfService": "https://equiledger.com/terms"
+    }
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
-      "description": "Development server"
+      "url": "https://testapi.thefauxpastrouper.xyz",
+      "description": "Production server"
     },
     {
-      "url": "https://api.equiledger.com/v1",
-      "description": "Production server"
+      "url": "http://localhost:3000",
+      "description": "Development server"
     }
   ],
   "tags": [
@@ -44,8 +43,8 @@
     }
   ],
   "externalDocs": {
-    "description": "EquiLedger Documentation",
-    "url": "https://docs.equiledger.com"
+    "description": "EquiLedger Raw API Documentation",
+    "url": "https://testapi.thefauxpastrouper.xyz/openapi.json"
   },
   "components": {
     "securitySchemes": {
@@ -62,8 +61,8 @@
           "email": {
             "type": "string",
             "format": "email",
-            "example": "aditya@gmail.com",
-            "description": "Email id of the user."
+            "example": "adityakumar@gmail.com",
+            "description": "Email id of the user"
           },
           "password": {
             "type": "string",
@@ -84,8 +83,8 @@
           "email": {
             "type": "string",
             "format": "email",
-            "example": "aditya@gmail.com",
-            "description": "Email id of the user."
+            "example": "adityakumar@gmail.com",
+            "description": "Email id of the user"
           },
           "password": {
             "type": "string",
@@ -104,12 +103,16 @@
         "properties": {
           "email": {
             "type": "string",
-            "format": "email"
+            "format": "email",
+            "example": "adityakumar@gmail.com",
+            "description": "Email id of the user"
           },
           "password": {
             "type": "string",
             "minLength": 6,
-            "maxLength": 100
+            "maxLength": 100,
+            "example": "random123",
+            "description": "Password of the user"
           },
           "role": {
             "type": "string",
@@ -117,10 +120,14 @@
               "ADMIN",
               "ANALYST",
               "VIEWER"
-            ]
+            ],
+            "example": "ADMIN",
+            "description": "Role that is to be assigned to the user"
           },
           "isActive": {
-            "type": "boolean"
+            "type": "boolean",
+            "example": "true",
+            "description": "Provides soft delete functionality to admin"
           }
         },
         "required": [
@@ -137,10 +144,14 @@
               "ADMIN",
               "ANALYST",
               "VIEWER"
-            ]
+            ],
+            "example": "ADMIN",
+            "description": "Role that is to be assigned to the user"
           },
           "isActive": {
-            "type": "boolean"
+            "type": "boolean",
+            "example": "true",
+            "description": "Provides soft delete functionality to admin"
           }
         }
       },
@@ -150,28 +161,38 @@
           "amount": {
             "type": "number",
             "minimum": 0,
-            "exclusiveMinimum": true
+            "exclusiveMinimum": true,
+            "example": 100.5,
+            "description": "Amount for a particular record like EXPENSE or INCOME"
           },
           "type": {
             "type": "string",
             "enum": [
               "INCOME",
               "EXPENSE"
-            ]
+            ],
+            "example": "EXPENSE",
+            "description": "Type of transaction (INCOME or EXPENSE)"
           },
           "category": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 50
+            "maxLength": 50,
+            "example": "Food",
+            "description": "Category of the transaction"
           },
           "date": {
             "type": "string",
             "nullable": true,
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2024-03-20T00:00:00Z",
+            "description": "Date of the transaction"
           },
           "description": {
             "type": "string",
-            "maxLength": 500
+            "maxLength": 500,
+            "example": "Lunch at office",
+            "description": "Optional description of the transaction"
           }
         },
         "required": [
@@ -186,28 +207,38 @@
           "amount": {
             "type": "number",
             "minimum": 0,
-            "exclusiveMinimum": true
+            "exclusiveMinimum": true,
+            "example": 100.5,
+            "description": "Amount for a particular record like EXPENSE or INCOME"
           },
           "type": {
             "type": "string",
             "enum": [
               "INCOME",
               "EXPENSE"
-            ]
+            ],
+            "example": "EXPENSE",
+            "description": "Type of transaction (INCOME or EXPENSE)"
           },
           "category": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 50
+            "maxLength": 50,
+            "example": "Food",
+            "description": "Category of the transaction"
           },
           "date": {
             "type": "string",
             "nullable": true,
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2024-03-20T00:00:00Z",
+            "description": "Date of the transaction"
           },
           "description": {
             "type": "string",
-            "maxLength": 500
+            "maxLength": 500,
+            "example": "Lunch at office",
+            "description": "Optional description of the transaction"
           }
         }
       }
@@ -329,9 +360,12 @@
           {
             "schema": {
               "type": "string",
-              "format": "uuid"
+              "format": "uuid",
+              "example": "123e4567-e89b-12d3-a456-426614174000",
+              "description": "Unique identifier (UUID) of the record"
             },
             "required": true,
+            "description": "Unique identifier (UUID) of the record",
             "name": "id",
             "in": "path"
           }
@@ -369,9 +403,12 @@
               "type": "integer",
               "minimum": 0,
               "exclusiveMinimum": true,
-              "default": 1
+              "default": 1,
+              "example": 1,
+              "description": "Page number for pagination"
             },
             "required": false,
+            "description": "Page number for pagination",
             "name": "page",
             "in": "query"
           },
@@ -381,17 +418,23 @@
               "minimum": 0,
               "exclusiveMinimum": true,
               "maximum": 100,
-              "default": 10
+              "default": 10,
+              "example": 10,
+              "description": "Number of records per page"
             },
             "required": false,
+            "description": "Number of records per page",
             "name": "limit",
             "in": "query"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "food",
+              "description": "Search query for category or description"
             },
             "required": false,
+            "description": "Search query for category or description",
             "name": "q",
             "in": "query"
           },
@@ -401,17 +444,23 @@
               "enum": [
                 "INCOME",
                 "EXPENSE"
-              ]
+              ],
+              "example": "EXPENSE",
+              "description": "Filter by record type"
             },
             "required": false,
+            "description": "Filter by record type",
             "name": "type",
             "in": "query"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "Rent",
+              "description": "Filter by category"
             },
             "required": false,
+            "description": "Filter by category",
             "name": "category",
             "in": "query"
           },
@@ -419,9 +468,12 @@
             "schema": {
               "type": "string",
               "nullable": true,
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2024-01-01T00:00:00Z",
+              "description": "Filter by start date"
             },
             "required": false,
+            "description": "Filter by start date",
             "name": "startDate",
             "in": "query"
           },
@@ -429,9 +481,12 @@
             "schema": {
               "type": "string",
               "nullable": true,
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2024-12-31T23:59:59Z",
+              "description": "Filter by end date"
             },
             "required": false,
+            "description": "Filter by end date",
             "name": "endDate",
             "in": "query"
           }
@@ -483,9 +538,12 @@
           {
             "schema": {
               "type": "string",
-              "format": "uuid"
+              "format": "uuid",
+              "example": "123e4567-e89b-12d3-a456-426614174000",
+              "description": "Unique identifier (UUID) of the record"
             },
             "required": true,
+            "description": "Unique identifier (UUID) of the record",
             "name": "id",
             "in": "path"
           }
@@ -510,9 +568,12 @@
           {
             "schema": {
               "type": "string",
-              "format": "uuid"
+              "format": "uuid",
+              "example": "123e4567-e89b-12d3-a456-426614174000",
+              "description": "Unique identifier (UUID) of the record"
             },
             "required": true,
+            "description": "Unique identifier (UUID) of the record",
             "name": "id",
             "in": "path"
           }
@@ -546,9 +607,12 @@
           {
             "schema": {
               "type": "string",
-              "format": "uuid"
+              "format": "uuid",
+              "example": "123e4567-e89b-12d3-a456-426614174000",
+              "description": "Unique identifier (UUID) of the record"
             },
             "required": true,
+            "description": "Unique identifier (UUID) of the record",
             "name": "id",
             "in": "path"
           }
@@ -631,9 +695,12 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 24,
-              "default": 6
+              "default": 6,
+              "example": 6,
+              "description": "Number of months to include in the dashboard data"
             },
             "required": false,
+            "description": "Number of months to include in the dashboard data",
             "name": "months",
             "in": "query"
           },
@@ -642,9 +709,12 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 52,
-              "default": 4
+              "default": 4,
+              "example": 4,
+              "description": "Number of weeks to include in the dashboard data"
             },
             "required": false,
+            "description": "Number of weeks to include in the dashboard data",
             "name": "weeks",
             "in": "query"
           },
@@ -653,9 +723,12 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 50,
-              "default": 5
+              "default": 5,
+              "example": 5,
+              "description": "Limit the number of records returned"
             },
             "required": false,
+            "description": "Limit the number of records returned",
             "name": "limit",
             "in": "query"
           }
@@ -684,9 +757,12 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 24,
-              "default": 6
+              "default": 6,
+              "example": 6,
+              "description": "Number of months to include in the dashboard data"
             },
             "required": false,
+            "description": "Number of months to include in the dashboard data",
             "name": "months",
             "in": "query"
           },
@@ -695,9 +771,12 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 52,
-              "default": 4
+              "default": 4,
+              "example": 4,
+              "description": "Number of weeks to include in the dashboard data"
             },
             "required": false,
+            "description": "Number of weeks to include in the dashboard data",
             "name": "weeks",
             "in": "query"
           },
@@ -706,9 +785,12 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 50,
-              "default": 5
+              "default": 5,
+              "example": 5,
+              "description": "Limit the number of records returned"
             },
             "required": false,
+            "description": "Limit the number of records returned",
             "name": "limit",
             "in": "query"
           }
@@ -737,9 +819,12 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 24,
-              "default": 6
+              "default": 6,
+              "example": 6,
+              "description": "Number of months to include in the dashboard data"
             },
             "required": false,
+            "description": "Number of months to include in the dashboard data",
             "name": "months",
             "in": "query"
           },
@@ -748,9 +833,12 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 52,
-              "default": 4
+              "default": 4,
+              "example": 4,
+              "description": "Number of weeks to include in the dashboard data"
             },
             "required": false,
+            "description": "Number of weeks to include in the dashboard data",
             "name": "weeks",
             "in": "query"
           },
@@ -759,9 +847,12 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 50,
-              "default": 5
+              "default": 5,
+              "example": 5,
+              "description": "Limit the number of records returned"
             },
             "required": false,
+            "description": "Limit the number of records returned",
             "name": "limit",
             "in": "query"
           }

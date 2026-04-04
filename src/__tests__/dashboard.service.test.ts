@@ -100,9 +100,9 @@ describe('DashboardService', () => {
 
       const result = await DashboardService.getMonthlyTrends('user-1');
 
-      expect(mockedPrisma.$queryRaw).toHaveBeenCalledWith(
-        expect.stringContaining('LIMIT 6')
-      );
+      expect(mockedPrisma.$queryRaw).toHaveBeenCalled();
+      const callArgs = mockedPrisma.$queryRaw.mock.calls[0];
+      expect(callArgs[callArgs.length - 1]).toBe(6);
       expect(result).toEqual(mockTrends);
     });
 
@@ -112,9 +112,9 @@ describe('DashboardService', () => {
 
       const result = await DashboardService.getMonthlyTrends('user-1', 12);
 
-      expect(mockedPrisma.$queryRaw).toHaveBeenCalledWith(
-        expect.stringContaining('LIMIT 12')
-      );
+      expect(mockedPrisma.$queryRaw).toHaveBeenCalled();
+      const callArgs = mockedPrisma.$queryRaw.mock.calls[0];
+      expect(callArgs[callArgs.length - 1]).toBe(12);
       expect(result).toEqual(mockTrends);
     });
   });
@@ -129,9 +129,9 @@ describe('DashboardService', () => {
 
       const result = await DashboardService.getWeeklyTrends('user-1');
 
-      expect(mockedPrisma.$queryRaw).toHaveBeenCalledWith(
-        expect.stringContaining('LIMIT 8')
-      );
+      expect(mockedPrisma.$queryRaw).toHaveBeenCalled();
+      const callArgs = mockedPrisma.$queryRaw.mock.calls[0];
+      expect(callArgs[callArgs.length - 1]).toBe(8);
       expect(result).toEqual(mockTrends);
     });
 
@@ -140,9 +140,9 @@ describe('DashboardService', () => {
 
       await DashboardService.getWeeklyTrends('user-1', 4);
 
-      expect(mockedPrisma.$queryRaw).toHaveBeenCalledWith(
-        expect.stringContaining('LIMIT 4')
-      );
+      expect(mockedPrisma.$queryRaw).toHaveBeenCalled();
+      const callArgs = mockedPrisma.$queryRaw.mock.calls[0];
+      expect(callArgs[callArgs.length - 1]).toBe(4);
     });
   });
 

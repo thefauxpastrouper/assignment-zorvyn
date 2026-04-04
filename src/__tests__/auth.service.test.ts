@@ -12,12 +12,16 @@ vi.mock('../utils/db', () => ({
 }));
 
 vi.mock('bcryptjs', () => ({
-  hash: vi.fn(async () => 'hashed-password'),
-  compare: vi.fn(async (password: string, hash: string) => password === 'password123' && hash === 'hashed-password'),
+  default: {
+    hash: vi.fn(async () => 'hashed-password'),
+    compare: vi.fn(async (password: string, hash: string) => password === 'password123' && hash === 'hashed-password'),
+  },
 }));
 
 vi.mock('jsonwebtoken', () => ({
-  sign: vi.fn(() => 'test-token'),
+  default: {
+    sign: vi.fn(() => 'test-token'),
+  },
 }));
 
 import { AuthService } from '../services/auth.service';
@@ -142,6 +146,7 @@ describe('AuthService', () => {
 
   it('handles database creation errors', async () => {
     mockedPrisma.user.findUnique.mockResolvedValue(null);
+    mockedBcrypt.hash.mockImplementation(async () => 'hashed-password');
     mockedPrisma.user.create.mockRejectedValue(new Error('Database connection failed'));
 
     await expect(
@@ -197,6 +202,7 @@ describe('AuthService', () => {
       createdAt: new Date('2026-01-01T00:00:00.000Z'),
     });
 
+    mockedBcrypt.compare.mockImplementation(async () => true);
     mockedJwt.sign.mockImplementation(() => {
       throw new Error('JWT signing failed');
     });
@@ -215,6 +221,9 @@ describe('AuthService', () => {
       isActive: true,
       createdAt: new Date('2026-01-01T00:00:00.000Z'),
     });
+
+    mockedBcrypt.compare.mockImplementation(async () => true);
+    mockedJwt.sign.mockImplementation(() => 'test-token');
 
     const result = await AuthService.signinUser({
       email: 'admin@example.com',

@@ -199,23 +199,22 @@ const spec = generator.generateDocument({
     description: 'A comprehensive API for EquiLedger, a financial records management system. This API provides endpoints for user authentication, record management, and dashboard analytics.',
     contact: {
       name: 'EquiLedger Support',
-      email: 'support@equiledger.com',
-      url: 'https://equiledger.com/support'
+      email: 'thefauxpastrouper120@gmail.com',
+      url: 'https://thefauxpastrouper.online/'
     },
     license: {
       name: 'MIT',
       url: 'https://opensource.org/licenses/MIT'
-    },
-    termsOfService: 'https://equiledger.com/terms'
+    }
   },
   servers: [ 
+    {
+      url: 'https://testapi.thefauxpastrouper.xyz',
+      description: 'Production server'
+    },
     { 
       url: 'http://localhost:3000', 
       description: 'Development server' 
-    },
-    {
-      url: 'https://api.equiledger.com/v1',
-      description: 'Production server'
     }
   ],
   tags: [
@@ -225,8 +224,8 @@ const spec = generator.generateDocument({
     { name: 'Dashboard', description: 'Analytical statistics and financial overview' }
   ],
   externalDocs: {
-    description: 'EquiLedger Documentation',
-    url: 'https://docs.equiledger.com'
+    description: 'EquiLedger Raw API Documentation',
+    url: 'https://testapi.thefauxpastrouper.xyz/openapi.json'
   }
 });
 

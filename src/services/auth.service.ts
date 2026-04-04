@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 export class AuthService {
     static async signupUser(data: any) {
-        const { email, password } = data;
+        const { email, password, role } = data;
 
         if (!email || !password) {
             throw new Error('Email and password are required');
@@ -24,6 +24,7 @@ export class AuthService {
             data: {
                 email,
                 password: hashedPassword,
+                role: role
             },
             select: {
                 id: true,
