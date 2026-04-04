@@ -5,8 +5,8 @@ import { respondWithError } from 'utils/clientError';
 
 export const signup = async (req: Request, res: Response) => {
     try {
-        let { email, password } = req.body;
-        let user = await AuthService.signupUser({ email, password });
+        let { email, password, role } = req.body;
+        let user = await AuthService.signupUser({ email, password, role });
         return successResponse(res, user, "User signed up successfully");
 
     } catch (error: unknown) {

@@ -1,10 +1,12 @@
 import { prisma } from '../utils/db';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { Role, type Role as RoleValue } from './prisma/generated/prisma/enums';
 
 export class AuthService {
-    static async signupUser(data: any) {
-        const { email, password, role } = data;
+    static async signupUser(data: { email: string; password: string; role?: RoleValue }) {
+        const { email, password, role: requestedRole } = data;
+        const role = requestedRole ?? Role.VIEWER;
 
         if (!email || !password) {
             throw new Error('Email and password are required');
@@ -24,7 +26,7 @@ export class AuthService {
             data: {
                 email,
                 password: hashedPassword,
-                role: role
+                role,
             },
             select: {
                 id: true,

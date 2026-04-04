@@ -13,6 +13,31 @@ describe('Auth Schemas', () => {
 
       expect(result.body.email).toBe('test@example.com');
       expect(result.body.password).toBe('password123');
+      expect(result.body.role).toBe('VIEWER');
+    });
+
+    it('accepts an explicit role', () => {
+      const result = SignupSchema.parse({
+        body: {
+          email: 'analyst@example.com',
+          password: 'password123',
+          role: 'ANALYST',
+        },
+      });
+
+      expect(result.body.role).toBe('ANALYST');
+    });
+
+    it('rejects invalid role', () => {
+      expect(() => {
+        SignupSchema.parse({
+          body: {
+            email: 'test@example.com',
+            password: 'password123',
+            role: 'SUPERUSER',
+          },
+        });
+      }).toThrow();
     });
 
     it('rejects invalid email', () => {

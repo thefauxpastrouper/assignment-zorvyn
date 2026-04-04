@@ -19,6 +19,8 @@ registry.registerPath({
   method: 'post',
   path: '/api/v1/auth/signup',
   summary: 'Register a new user',
+  description:
+    'Creates an account. Optional body field `role` may be `ADMIN`, `ANALYST`, or `VIEWER`. When omitted, the user is created as `VIEWER`.',
   tags: ['Auth'],
   request: { body: { content: { 'application/json': { schema: SignupSchema.shape.body } } } },
   responses: { 
@@ -218,7 +220,7 @@ const spec = generator.generateDocument({
     }
   ],
   tags: [
-    { name: 'Auth', description: 'Authentication and user registration endpoints' },
+    { name: 'Auth', description: 'Authentication and registration. Signup accepts an optional `role` (ADMIN, ANALYST, VIEWER); defaults to VIEWER.' },
     { name: 'Users', description: 'User management operations (Admin only)' },
     { name: 'Records', description: 'Financial record CRUD operations and filtering' },
     { name: 'Dashboard', description: 'Analytical statistics and financial overview' }

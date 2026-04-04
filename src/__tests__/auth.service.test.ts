@@ -55,7 +55,7 @@ describe('AuthService', () => {
     mockedPrisma.user.create.mockResolvedValue({
       id: 'user-1',
       email: 'test@example.com',
-      role: 'USER',
+      role: 'VIEWER',
       isActive: true,
       createdAt: new Date('2026-01-01T00:00:00.000Z'),
     });
@@ -68,11 +68,41 @@ describe('AuthService', () => {
     expect(result).toEqual({
       id: 'user-1',
       email: 'test@example.com',
-      role: 'USER',
+      role: 'VIEWER',
       isActive: true,
       createdAt: new Date('2026-01-01T00:00:00.000Z'),
     });
-    expect(mockedPrisma.user.create).toHaveBeenCalled();
+    expect(mockedPrisma.user.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          email: 'test@example.com',
+          role: 'VIEWER',
+        }),
+      })
+    );
+  });
+
+  it('creates a user with the requested role', async () => {
+    mockedPrisma.user.findUnique.mockResolvedValue(null);
+    mockedPrisma.user.create.mockResolvedValue({
+      id: 'user-2',
+      email: 'analyst@example.com',
+      role: 'ANALYST',
+      isActive: true,
+      createdAt: new Date('2026-01-01T00:00:00.000Z'),
+    });
+
+    await AuthService.signupUser({
+      email: 'analyst@example.com',
+      password: 'password123',
+      role: 'ANALYST',
+    });
+
+    expect(mockedPrisma.user.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({ role: 'ANALYST' }),
+      })
+    );
   });
 
   it('throws on signin with invalid credentials', async () => {
