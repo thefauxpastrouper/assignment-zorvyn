@@ -1,3 +1,4 @@
+import fs from 'fs/promises';
 import { OpenApiGeneratorV3, OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import { SignupSchema, SigninSchema } from "../validators/auth.schema";
 import { CreateUserSchema, UpdateUserSchema } from "../validators/user.schema";
@@ -209,7 +210,7 @@ const spec = generator.generateDocument({
   },
   servers: [ 
     { 
-      url: 'http://localhost:3000/api/v1', 
+      url: 'http://localhost:3000', 
       description: 'Development server' 
     },
     {
@@ -230,5 +231,5 @@ const spec = generator.generateDocument({
 });
 
 // This creates the exact same type of file as Parallel AI
-await Bun.write('src/docs/openapi.json', JSON.stringify(spec, null, 2));
+await fs.writeFile('src/docs/openapi.json', JSON.stringify(spec, null, 2));
 console.log('✅ OpenAPI Documentation generated successfully');

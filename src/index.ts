@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import v1Router from "./routes/v1";
 import { globalErrorHandler } from "./middleware/error.middleware";
+import { rateLimiter } from "./middleware/rateLimit.middleware";
 import { NotFoundError } from "./utils/error";
 import { apiReference } from "@scalar/express-api-reference";
 import openApiSpec from './docs/openapi.json';
@@ -12,6 +13,7 @@ dotenv.config();
 
 const app = express();
 
+app.use(rateLimiter);
 app.use(cors());
 app.use(express.json());
 

@@ -38,10 +38,11 @@ export class RecordService {
   }
 
   static async getRecords(userId: string, query: any) {
-    const { page = 1, limit = 10, type, category, startDate, endDate } = query;
+    const { page = 1, limit = 10, q, type, category, startDate, endDate } = query;
     const pageNum = Number(page);
     const limitNum = Number(limit);
     const skip = (pageNum - 1) * limitNum;
+    const searchQuery = typeof q === 'string' ? q.trim() : '';
 
     // Build filter conditions
     const where: any = {
@@ -50,6 +51,17 @@ export class RecordService {
       ...(type && { type }),
       ...(category && { category }),
     };
+
+    if (searchQuery) {
+      where.AND = [
+        {
+          OR: [
+            { category: { contains: searchQuery, mode: 'insensitive' } },
+            { description: { contains: searchQuery, mode: 'insensitive' } },
+          ]
+        }
+      ];
+    }
 
     // Date range filtering
     if (startDate || endDate) {
