@@ -190,7 +190,7 @@ export BASE_URL="https://testapi.thefauxpastrouper.xyz"
 ```bash
 curl -sS -X POST "$BASE_URL/api/v1/auth/signup" \
   -H "Content-Type: application/json" \
-  -d '{"email":"you@example.com","password":"your-secure-password"}'
+  -d '{"email":"you@example.com","password":"your-secure-password", "role": "ADMIN"}'
 ```
 
 New users get role **VIEWER** by default.
