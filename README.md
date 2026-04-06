@@ -57,6 +57,7 @@ All versioned routes are under **`/api/v1`**. Full example:
 | -------- | --- |
 | **Interactive docs (Scalar)** | [https://testapi.thefauxpastrouper.xyz/reference](https://testapi.thefauxpastrouper.xyz/reference) |
 | **OpenAPI 3.1 JSON** | [https://testapi.thefauxpastrouper.xyz/openapi.json](https://testapi.thefauxpastrouper.xyz/openapi.json) |
+| **Blog On this Project** | [https://www.thefauxpastrouper.online/blog/building-equiledger-high-performance-apis-with-bun-prisma-and-express](https://www.thefauxpastrouper.online/blog/building-equiledger-high-performance-apis-with-bun-prisma-and-express) |
 
 You can import `openapi.json` into Postman, Insomnia, or Hoppscotch (“Import from URL”) to generate a ready-made collection with schemas.
 
