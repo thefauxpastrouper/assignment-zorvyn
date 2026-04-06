@@ -185,7 +185,7 @@ Set a shell variable so you can paste examples as-is:
 export BASE_URL="https://testapi.thefauxpastrouper.xyz"
 ```
 
-### 1. Register (optional if you already have an account)
+### 1. Register (optional if you already have an account, currently anyone can be admin only for tesintg purposes)
 
 ```bash
 curl -sS -X POST "$BASE_URL/api/v1/auth/signup" \
